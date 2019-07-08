@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 // import 'package:rubblish_app/http/http_request.dart';
-import 'package:rubblish_app/widgets/search_text_field_widget.dart';
+// import 'package:rubblish_app/widgets/search_text_field_widget.dart';
 import 'package:rubblish_app/widgets/loading_widget.dart';
-import 'package:rubblish_app/constant/constant.dart';
-import 'package:rubblish_app/widgets/search_bar.dart';
+// import 'package:rubblish_app/constant/constant.dart';
+import 'package:rubblish_app/widgets/search_bar_clean.dart';
 import 'package:rubblish_app/http/API.dart';
 import 'package:rubblish_app/bean/search_rubblish_entity.dart';
 // import 'package:rubblish_app/routers/router.dart';
 
 final API _api = API();
+
 
 class HomePage extends StatefulWidget {
 
@@ -25,29 +26,46 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('_HomePageState init');
     return Scaffold(
+      appBar: SearchBar(
+        // backgroundColor: Colors.blue,
+        hintText: hintText,
+        onPressed: (text){
+          print("搜索内容：$text");
+          _api.getRubblishCategory(text, (map){
+            print('getRubblishCategory----- $map');
+            setState(() {
+              _searchContent = text;
+              rubblisData = map;
+              init = true;
+              print('_rubblisData $rubblisData');
+            });
+          });
+        },
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
           child: Column(
             children: <Widget>[
-              Container(
-                color: Colors.green,
-                child: SearchTextFieldWidget(
-                  margin: EdgeInsets.all(Constant.MARGIN_RIGHT),
-                  hintText: hintText,
-                  onSubmitted: (searchContent) {
-                    _api.getRubblishCategory(searchContent, (map){
-                      print('getRubblishCategory----- $map');
-                      setState(() {
-                        _searchContent = searchContent;
-                        rubblisData = map;
-                        init = true;
-                        print('_rubblisData $rubblisData');
-                      });
-                    });
-                  },
-                ),
-              ),
+              // Container(
+              //   color: Colors.green,
+              //   child: SearchTextFieldWidget(
+              //     margin: EdgeInsets.all(Constant.MARGIN_RIGHT),
+              //     hintText: hintText,
+              //     onSubmitted: (searchContent) {
+              //       _api.getRubblishCategory(searchContent, (map){
+              //         print('getRubblishCategory----- $map');
+              //         setState(() {
+              //           _searchContent = searchContent;
+              //           rubblisData = map;
+              //           init = true;
+              //           print('_rubblisData $rubblisData');
+              //         });
+              //       });
+              //     },
+              //   ),
+              // ),
               Expanded(
                 child: LoadingWidget.containerLoadingBody(_getBody(), loading: loading),
               )
@@ -71,11 +89,10 @@ class _HomePageState extends State<HomePage> {
         },
       );
     } else {
-      print('_searchContent = ${_searchContent}');
       return init ? 
         ListView(children: <Widget>[
           Text('输入内容为: $_searchContent'),
-          Text('返回结果为$rubblisData'),
+          // Text('返回结果为$rubblisData'),
           Padding(
             child: Text('暂无搜索结果', textAlign: TextAlign.center,),
             padding: EdgeInsets.only(right: 6.0, left: 6.0, top: 30.0, bottom: 20.0),

@@ -1,7 +1,5 @@
 import 'package:rubblish_app/http/http_request.dart';
 
-//import 'package:doubanapp/bean/MovieBean.dart';
-//import 'package:doubanapp/bean/ComingSoonBean.dart';
 import 'package:rubblish_app/bean/search_rubblish_entity.dart';
 typedef RequestCallBack<T> = void Function(T value);
 
