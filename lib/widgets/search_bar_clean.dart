@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rubblish_app/res/resources.dart';
 
 class SearchBar extends StatefulWidget implements PreferredSizeWidget{
@@ -28,9 +29,22 @@ class _SearchBarState extends State<SearchBar> {
 
   SystemUiOverlayStyle overlayStyle = SystemUiOverlayStyle.light;
   TextEditingController _controller = TextEditingController();
+  bool showClean = false;
   @override
   void initState() {
     super.initState();
+    _controller.addListener(() {
+      print('_controller.text, ${_controller.text}');
+      print(_controller.text.runtimeType);
+
+      if (_controller.text.length > 0 || _controller.text != '' || _controller.text != null) {
+        setState(() {
+          showClean = true;
+        });
+      } else {
+        showClean = false;
+      }
+    });
     setState(() {
       overlayStyle = ThemeData.estimateBrightnessForColor(widget.backgroundColor) == Brightness.dark
           ? SystemUiOverlayStyle.light
@@ -41,6 +55,8 @@ class _SearchBarState extends State<SearchBar> {
   Color getColor(){
     return overlayStyle == SystemUiOverlayStyle.light ? Colors.white : Colours.text_dark;
   }
+
+
   
   @override
   Widget build(BuildContext context) {
@@ -89,7 +105,7 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                         hintText: widget.hintText,
                         hintStyle: TextStyles.textGrayC14,
-                        suffixIcon: InkWell(
+                        suffixIcon: showClean ? InkWell(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
                             child: Image.asset("assets/images/order_delete.png"),
@@ -98,7 +114,7 @@ class _SearchBarState extends State<SearchBar> {
                             _controller.text = "";
                             widget.onPressed(_controller.text);
                           },
-                        ),
+                        ) : null,
                       ),
                     ),
                   ),

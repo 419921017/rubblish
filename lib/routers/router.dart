@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:rubblish_app/pages/detail/detail_page.dart';
 import 'package:rubblish_app/pages/container_page.dart';
+import 'package:rubblish_app/pages/rubblishCategory/dry.dart';
+import 'package:rubblish_app/pages/rubblishCategory/hazarous.dart';
+import 'package:rubblish_app/pages/rubblishCategory/recycled.dart';
+import 'package:rubblish_app/pages/rubblishCategory/wet.dart';
 
 ///https://www.jianshu.com/p/b9d6ec92926f
 
 class Router {
   static const homePage = 'app://';
   static const detailPage = 'app://DetailPage';
+  static const dryPage = 'app://dryPage';
+  static const wetPage = 'app://wetPage';
+  static const hazarousPage = 'app://hazarousPage';
+  static const recycledPage = 'app://recycledPage';
+
   // static const playListPage = 'app://VideosPlayPage';
   // static const searchPage = 'app://SearchPage';
   // static const photoHero = 'app://PhotoHero';
@@ -27,6 +36,14 @@ class Router {
       switch (url) {
         case homePage:
           return ContainerPage();
+        case dryPage:
+          return DryPage();
+        case wetPage:
+          return WetPage();
+        case hazarousPage:
+          return HazarousPage();
+        case recycledPage:
+          return RecycledPage();
         // case detailPage:
         //   return DetailPage(params);
         // case playListPage:
