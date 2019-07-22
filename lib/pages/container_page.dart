@@ -24,6 +24,7 @@ class _Item {
 
 class _ContainerPageState extends State<ContainerPage> {
   // final ShopPageWidget shopPageWidget  = ShopPageWidget();
+  final GroupPage groupPage  = GroupPage();
   List<Widget> pages;
 
   final defaultItemColor = Color.fromARGB(255, 125, 125, 125);
@@ -51,7 +52,7 @@ class _ContainerPageState extends State<ContainerPage> {
       pages = [
         HomePage(),
         // BookAudioVideoPage(),
-        GroupPage(),
+        groupPage,
         // shopPageWidget,
         // PersonCenterPage()
       ];
@@ -98,8 +99,8 @@ class _ContainerPageState extends State<ContainerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: new Container(child: _getPagesWidget(0)));
+    // return Scaffold(
+    //   body: new Container(child: _getPagesWidget(0)));
 //    Scaffold({
 //    Key key,
 //    this.appBar,
@@ -140,7 +141,7 @@ class _ContainerPageState extends State<ContainerPage> {
           setState(() {
             _selectIndex = index;
             //这个是用来控制比较特别的shopPage中WebView不能动态隐藏的问题
-            // shopPageWidget.setShowState(pages.indexOf(shopPageWidget) == _selectIndex);
+            groupPage.setShowState(pages.indexOf(groupPage) == _selectIndex);
           });
         },
         //图标大小
